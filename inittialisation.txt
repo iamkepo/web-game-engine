@@ -1,0 +1,149 @@
+Tu es un développeur senior expert en ElectronJS, React, Three.js, Rapier.js
+et en architecture d’éditeurs 3D web/desktop.
+
+CONTEXTE :
+Je construis en SOLO un éditeur 3D desktop basé sur des technologies web.
+L’application est un éditeur Electron qui permet de créer des scènes 3D,
+de gérer des assets, d’ajouter de la physique, puis d’exporter
+un runtime web autonome.
+
+OBJECTIF DU MVP :
+Créer une application Electron permettant :
+- d’importer des assets 3D (GLTF / GLB),
+- de les gérer localement dans un projet,
+- de les placer dans une scène 3D,
+- d’ajouter une physique basique avec Rapier.js,
+- d’exporter un build web exécutable sans l’éditeur.
+
+STACK IMPOSÉE :
+- ElectronJS (main + preload + renderer)
+- React + Vite (UI uniquement)
+- Three.js (rendu 3D)
+- Rapier.js (physique 3D)
+- TypeScript partout
+
+PRINCIPE FONDAMENTAL :
+L’éditeur et le runtime sont STRICTEMENT séparés.
+Le runtime ne dépend NI de React NI d’Electron.
+Tout l’état du projet est stocké en JSON.
+
+ARCHITECTURE ATTENDUE :
+
+apps/
+ ├─ electron/        → main.ts, preload.ts (filesystem, IPC, export)
+ ├─ editor/          → React UI (panels, viewport, inspector)
+ ├─ engine/          → logique 3D (Three.js + Rapier, ECS light)
+ ├─ runtime/         → player web autonome
+ └─ shared/          → types et modèles communs
+
+FONCTIONNEMENT DE L’APPLICATION :
+
+1. L’utilisateur lance l’app Electron
+2. Il crée ou ouvre un projet (un simple dossier local)
+3. L’éditeur charge la scène depuis scene.json
+4. Le viewport affiche la scène via Three.js
+5. L’utilisateur importe un asset GLTF/GLB :
+   - le fichier est copié dans assets/models/
+   - une preview est générée
+   - les métadonnées sont ajoutées à assets.index.json
+6. L’utilisateur ajoute l’asset dans la scène :
+   - une entité est créée
+   - transform + mesh sont ajoutés
+   - optionnel : un composant physics est ajouté
+   - scene.json est mis à jour
+7. Les transformations modifient scene.json
+8. À l’export :
+   - un dossier build/ est généré
+   - il contient un runtime web autonome avec physique
+
+FORMAT DES DONNÉES (OBLIGATOIRE) :
+
+scene.json :
+{
+  "entities": [
+    {
+      "id": "entity-1",
+      "name": "MyModel",
+      "components": {
+        "transform": {
+          "position": [0, 5, 0],
+          "rotation": [0, 0, 0],
+          "scale": [1, 1, 1]
+        },
+        "mesh": {
+          "assetId": "model.glb"
+        },
+        "physics": {
+          "type": "dynamic",
+          "collider": "box",
+          "mass": 1
+        }
+      }
+    }
+  ]
+}
+
+assets.index.json :
+{
+  "model.glb": {
+    "type": "model",
+    "path": "assets/models/model.glb",
+    "preview": "assets/previews/model.png"
+  }
+}
+
+PHYSIQUE (RAPIER) — MVP SCOPE :
+- Monde physique Rapier initialisé dans le runtime
+- Colliders simples (box, sphere)
+- Bodies statiques ou dynamiques
+- Synchronisation Rapier → Three.js
+
+EXPORT BUILD :
+
+build/
+ ├─ index.html
+ ├─ runtime.js
+ ├─ scene.json
+ └─ assets/
+
+Le fichier index.html doit être ouvrable directement
+et exécuter la scène avec rendu + physique.
+
+CONTRAINTES TECHNIQUES :
+- Rapier est initialisé UNIQUEMENT dans le runtime
+- L’éditeur ne simule pas la physique (visualisation seulement)
+- Un seul canvas WebGL
+- Accès FS uniquement via Electron main process (IPC)
+- Code simple, lisible, extensible
+
+CE QUE TU DOIS PRODUIRE :
+1. Structure complète du projet
+2. Runtime Three.js + Rapier minimal
+3. Import GLTF + preview
+4. Ajout composant physics
+5. Export du build
+6. Commentaires clairs
+
+INTERDIT :
+- Multiplayer
+- Scripting avancé
+- Optimisations prématurées
+- Features hors MVP
+
+PRIORITÉS :
+- Séparation editor / runtime
+- Stabilité
+- Simplicité
+- Architecture extensible (blueprint, plugins plus tard)
+
+PROCÉDURE :
+Commence par :
+1. Générer l’arborescence du projet
+2. Implémenter le runtime (Three + Rapier)
+3. Charger scene.json et instancier la physique
+4. Implémenter import asset
+5. Implémenter export build
+
+Ne saute aucune étape.
+N’improvise pas.
+Reste strictement dans le périmètre.

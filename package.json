@@ -1,0 +1,24 @@
+{
+  "name": "web-game-engine",
+  "private": true,
+  "scripts": {
+    "install:shared": "npm --prefix apps/shared install",
+    "install:engine": "npm --prefix apps/engine install",
+    "install:runtime": "npm --prefix apps/runtime install",
+    "install:editor": "npm --prefix apps/editor install",
+    "install:electron": "npm --prefix apps/electron install",
+    "install:all": "npm run install:shared && npm run install:engine && npm run install:runtime && npm run install:editor && npm run install:electron",
+
+    "dev:editor": "npm --prefix apps/editor run dev",
+    "build:editor": "npm --prefix apps/editor run build",
+
+    "dev:runtime": "npm --prefix apps/runtime run dev",
+    "build:runtime": "npm --prefix apps/runtime run build",
+
+    "dev:engine": "npm --prefix apps/engine run dev",
+    "build:engine": "npm --prefix apps/engine run build",
+
+    "dev:electron": "npm --prefix apps/electron run dev",
+    "build:electron": "npm --prefix apps/electron run build"
+  }
+}

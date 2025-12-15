@@ -1,0 +1,178 @@
+🧠 Vue d’ensemble (en une phrase)
+
+L’application est un éditeur desktop Electron qui pilote un moteur 3D web, sauvegarde tout en JSON, puis génère un runtime autonome exécutable partout.
+
+⸻
+
+1️⃣ Lancement de l’application
+
+L’utilisateur double-clique.
+
+Ce qui se passe vraiment :
+	•	Electron démarre
+	•	main.ts crée une fenêtre
+	•	Le renderer charge l’app React
+	•	Le preload expose une API sécurisée (IPC)
+
+👉 À ce stade :
+	•	pas de 3D encore
+	•	pas de fichiers ouverts
+	•	juste l’éditeur
+
+⸻
+
+2️⃣ Création / ouverture d’un projet
+
+L’utilisateur crée un projet.
+
+Electron (main process) :
+	•	crée un dossier local
+	•	initialise :
+	•	project.json
+	•	scene.json
+	•	assets/
+
+👉 Le projet est juste un dossier, rien de magique.
+
+⸻
+
+3️⃣ Le viewport 3D s’initialise
+
+Dans l’éditeur :
+	•	React affiche l’UI
+	•	Un <canvas> est monté
+	•	Three.js :
+	•	crée la scène
+	•	caméra
+	•	lumière
+	•	render loop
+
+👉 Important :
+	•	React ne gère pas la 3D
+	•	React héberge juste le canvas
+
+⸻
+
+4️⃣ Import d’un asset 3D
+
+L’utilisateur clique “Importer”.
+
+Flux réel :
+	1.	React déclenche une action
+	2.	IPC → main.ts
+	3.	Electron ouvre un file dialog
+	4.	Le fichier est copié dans :
+
+project/assets/models/
+
+
+	5.	Three.js charge le modèle
+	6.	Une preview est rendue offscreen
+	7.	Metadata écrite dans assets.index.json
+
+👉 L’éditeur ne lit jamais directement le disque.
+
+⸻
+
+5️⃣ Ajout dans la scène
+
+L’utilisateur glisse l’asset dans la scène.
+
+Ce qui se passe :
+	•	Une entité est créée
+	•	Elle reçoit :
+	•	transform
+	•	mesh
+	•	L’entité est ajoutée à scene.json
+
+👉 La scène est la source de vérité, pas Three.js.
+
+⸻
+
+6️⃣ Manipulation (move / rotate / scale)
+
+L’utilisateur manipule l’objet.
+
+En coulisses :
+	•	Gizmo Three.js
+	•	Transform mis à jour en mémoire
+	•	Sync immédiat dans scene.json
+
+👉 Si l’app crash :
+✔️ le projet est toujours cohérent.
+
+⸻
+
+7️⃣ Sauvegarde automatique
+
+À chaque changement :
+	•	scene.json est mis à jour
+	•	pas de “Save” manuel
+	•	pas de perte de données
+
+👉 Oui, comme Figma.
+
+⸻
+
+8️⃣ Export du build 🚀
+
+L’utilisateur clique “Exporter”.
+
+Electron fait :
+	•	crée /build
+	•	copie :
+	•	runtime.js
+	•	index.html
+	•	scene.json
+	•	assets utilisés
+	•	remplace les chemins
+
+👉 Le build est 100 % indépendant.
+
+⸻
+
+9️⃣ Exécution du build
+
+L’utilisateur ouvre index.html.
+
+Le runtime :
+	1.	Charge scene.json
+	2.	Initialise Three.js
+	3.	Charge les assets
+	4.	Crée les entités
+	5.	Lance la render loop
+
+👉 Aucun React.
+👉 Aucun Electron.
+👉 Juste du web pur.
+
+⸻
+
+🔁 Cycle de vie complet
+
+Éditeur (Electron + React)
+   ↓
+JSON (scene / assets)
+   ↓
+Export
+   ↓
+Runtime Web (Three.js)
+
+
+⸻
+
+🧠 Pourquoi cette architecture est intelligente
+	•	Séparation nette des responsabilités
+	•	Zéro lock-in
+	•	Facile à déboguer
+	•	Facile à étendre (physique, blueprint, plugins)
+	•	Tu peux tout montrer, tout expliquer
+
+⸻
+
+🎯 Ce que tu pourras ajouter ensuite
+	•	Blueprint → lit le même JSON
+	•	Rapier → plug dans runtime
+	•	Plugins → injectent composants
+	•	Multiplayer → synchronise JSON
+	•	Cloud → sync projet
