@@ -55,7 +55,22 @@ export const loadSceneIntoEngine = async (
     objectsByEntityId.set(e.id, root);
 
     const mesh = e.components.mesh;
-    if (!mesh) return;
+    if (!mesh) {
+      const physics = e.components.physics;
+      if (!physics) return;
+
+      const material = new THREE.MeshStandardMaterial({ color: 0x66ccff });
+
+      if (physics.collider === "sphere") {
+        const geo = new THREE.SphereGeometry(0.5, 24, 16);
+        root.add(new THREE.Mesh(geo, material));
+        return;
+      }
+
+      const geo = new THREE.BoxGeometry(1, 1, 1);
+      root.add(new THREE.Mesh(geo, material));
+      return;
+    }
 
     const url = resolveAssetUrl(data.assetsIndex, mesh.assetId);
     const loader = new GLTFLoader();

@@ -2,10 +2,10 @@
   "name": "@wge/electron",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "main": "dist/main.js",
   "scripts": {
-    "dev": "tsc -p tsconfig.json && WGE_EDITOR_DEV_URL=http://localhost:5173 electron .",
+    "dev": "tsc -p tsconfig.json && WGE_EDITOR_DEV_URL=http://localhost:5174 electron .",
     "start": "electron .",
     "build": "tsc -p tsconfig.json"
   },

@@ -1,9 +1,5 @@
 import { app, BrowserWindow } from "electron";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const createWindow = async (): Promise<void> => {
   const win = new BrowserWindow({
@@ -17,6 +13,7 @@ const createWindow = async (): Promise<void> => {
 
   const devUrl = process.env.WGE_EDITOR_DEV_URL;
   if (devUrl) {
+    win.webContents.openDevTools();
     await win.loadURL(devUrl);
     return;
   }

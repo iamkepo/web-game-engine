@@ -6,6 +6,10 @@ export default defineConfig({
   resolve: {
     dedupe: ["three"]
   },
+  server: {
+    port: 5174,
+    strictPort: true
+  },
   build: {
     target: "es2022",
     sourcemap: true,

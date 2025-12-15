@@ -1,0 +1,122 @@
+Tu es un développeur senior spécialisé en ElectronJS, React, Three.js, Rapier.js
+et en architecture d’éditeurs 3D web évolutifs.
+
+CONTEXTE :
+Je dispose déjà d’une V1 fonctionnelle :
+- éditeur Electron + React
+- viewport Three.js
+- asset manager (GLTF/GLB)
+- scene.json comme source de vérité
+- runtime web autonome
+- export build fonctionnel
+- physique basique avec Rapier.js
+
+OBJECTIF V2 :
+Faire évoluer l’éditeur vers un outil de création de scènes 3D INTERACTIVES
+sans casser la compatibilité avec la V1.
+
+PRINCIPE FONDAMENTAL :
+- La V1 DOIT continuer à fonctionner sans modification des projets existants
+- Toute nouvelle fonctionnalité V2 est optionnelle et additive
+- Le runtime reste web-first et autonome
+
+NOUVELLES FONCTIONNALITÉS V2 :
+
+1. BLUEPRINT VISUEL (NO-CODE)
+- Éditeur node-based intégré dans l’éditeur React
+- Basé sur Rete.js (ou équivalent)
+- Les blueprints décrivent la logique événementielle
+- AUCUN code utilisateur
+
+2. SYSTÈME D’ÉVÉNEMENTS
+- onStart
+- onClick
+- onCollision
+- onTriggerEnter / Exit
+- onKeyPress
+
+3. ACTIONS DE BASE
+- Move / Rotate / Scale
+- ApplyForce (Rapier)
+- PlayAnimation (placeholder)
+- SetVisibility
+- DestroyEntity
+
+4. CONDITIONS
+- If / Else
+- Compare (number, boolean)
+- AND / OR
+
+5. EXTENSION DU FORMAT scene.json (COMPATIBLE V1)
+
+Exemple :
+{
+  "components": {
+    "transform": {},
+    "mesh": {},
+    "physics": {},
+    "logic": {
+      "graph": "blueprint-1"
+    }
+  }
+}
+
+Les graphes sont stockés dans blueprint.json séparément.
+
+6. runtime V2
+- Charge scene.json + blueprint.json
+- Interprète les graphes au runtime
+- Exécute les actions via ECS
+- Synchronise Rapier → Three.js
+
+7. UI ÉDITEUR V2
+- Panel Blueprint
+- Sélection d’entité → édition de son graphe
+- Debug visuel (node actif)
+
+CONTRAINTES TECHNIQUES :
+- Aucune régression V1
+- Aucun scripting libre
+- Aucun eval / Function / wasm custom
+- Blueprint interprété, pas compilé
+- Performance raisonnable (pas d’optimisation prématurée)
+
+STRUCTURE PROJET (INCHANGÉE) :
+
+apps/
+ ├─ electron/
+ ├─ editor/
+ ├─ engine/
+ ├─ runtime/
+ └─ shared/
+
+CE QUE TU DOIS PRODUIRE :
+1. Extension des formats JSON (scene + blueprint)
+2. Architecture du moteur de blueprint (runtime)
+3. Modèle ECS compatible V1/V2
+4. UI Blueprint Editor (React)
+5. Exemples concrets de graphes (onClick → move, collision → destroy)
+
+INTERDIT :
+- Multiplayer
+- Marketplace
+- Cloud
+- Scripting utilisateur
+- Refactor massif non justifié
+
+PRIORITÉS :
+- Rétrocompatibilité
+- Lisibilité
+- Séparation editor / runtime
+- Extensibilité future (plugins, scripting contrôlé)
+
+PROCÉDURE :
+1. Définir les formats de données V2
+2. Implémenter l’interpréteur blueprint runtime
+3. Intégrer Rapier events
+4. Ajouter l’UI Blueprint
+5. Tester avec un projet V1 existant
+
+Ne saute aucune étape.
+Ne supprime rien de la V1.
+Reste strictement dans le périmètre V2.

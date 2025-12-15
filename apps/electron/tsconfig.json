@@ -4,10 +4,10 @@
     "outDir": "dist",
     "rootDir": "src",
     "target": "ES2022",
-    "module": "NodeNext",
+    "module": "CommonJS",
     "lib": ["ES2022"],
     "types": ["node"],
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "Node"
   },
   "include": ["src"]
 }
