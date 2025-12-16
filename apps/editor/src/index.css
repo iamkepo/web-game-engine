@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+
+:root {
+  --color-primary: #1a1a1a;
+  --color-secondary: #333333;
+  --color-accent: #4f46e5;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
