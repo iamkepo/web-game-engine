@@ -3,11 +3,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import type { AssetIndex, Entity, SceneData } from "@wge/shared";
 import type { Engine } from "@wge/engine";
 import { applyTransform } from "./applyTransform";
-
-type ProjectData = {
-  scene: SceneData;
-  assetsIndex: AssetIndex;
-};
+import type { ProjectData } from "./loadProjectData";
 
 const resolveAssetUrl = (assetsIndex: AssetIndex, assetId: string): string => {
   const entry = assetsIndex[assetId];

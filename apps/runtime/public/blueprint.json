@@ -1,0 +1,67 @@
+{
+  "version": 2,
+  "graphs": [
+    {
+      "id": "blueprint-1",
+      "name": "Cube Interactions",
+      "nodes": [
+        {
+          "id": "ev-start",
+          "kind": "event",
+          "op": "onStart"
+        },
+        {
+          "id": "act-boost",
+          "kind": "action",
+          "op": "applyForce",
+          "params": {
+            "impulse": [0, 8, 0]
+          }
+        },
+        {
+          "id": "ev-collide",
+          "kind": "event",
+          "op": "onCollision"
+        },
+        {
+          "id": "act-hide",
+          "kind": "action",
+          "op": "setVisibility",
+          "params": {
+            "visible": false
+          }
+        },
+        {
+          "id": "ev-space",
+          "kind": "event",
+          "op": "onKeyPress",
+          "params": {
+            "key": " "
+          }
+        },
+        {
+          "id": "act-jump",
+          "kind": "action",
+          "op": "applyForce",
+          "params": {
+            "impulse": [0, 6, 0]
+          }
+        }
+      ],
+      "edges": [
+        {
+          "from": { "nodeId": "ev-start", "port": "then" },
+          "to": { "nodeId": "act-boost", "port": "in" }
+        },
+        {
+          "from": { "nodeId": "ev-collide", "port": "then" },
+          "to": { "nodeId": "act-hide", "port": "in" }
+        },
+        {
+          "from": { "nodeId": "ev-space", "port": "then" },
+          "to": { "nodeId": "act-jump", "port": "in" }
+        }
+      ]
+    }
+  ]
+}

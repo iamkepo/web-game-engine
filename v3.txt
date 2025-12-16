@@ -1,0 +1,143 @@
+Tu es un architecte logiciel senior spécialisé en moteurs de jeux,
+éditeurs 3D web, ElectronJS, React, Three.js, Rapier.js et systèmes extensibles.
+
+CONTEXTE :
+Je dispose d’un moteur/éditeur 3D web en V2 avec :
+- Electron + React
+- Viewport Three.js
+- Asset Manager
+- Scene Tree + Inspector
+- Physique Rapier.js
+- Blueprint visuel no-code (événements, actions, conditions)
+- Runtime web autonome
+- Export build web fonctionnel
+- Rétrocompatibilité V1 et V2 assurée
+
+OBJECTIF V3 :
+Transformer l’éditeur en une PLATEFORME DE CRÉATION 3D INTERACTIVE
+EXTENSIBLE, MODULAIRE et ORIENTÉ PRODUIT,
+tout en restant web-first et sans sacrifier la simplicité.
+
+PRINCIPES CLÉS V3 :
+- Toujours no-code par défaut
+- Scripting possible mais contrôlé
+- Tout est plugin
+- L’éditeur reste offline-first
+- Le runtime reste 100 % web
+
+NOUVELLES FONCTIONNALITÉS V3 :
+
+1. SYSTÈME DE PLUGINS
+- Plugins installables par projet
+- Plugins isolés (sandbox)
+- Types de plugins :
+  - Composants (AI, Camera, UI, Audio)
+  - Nodes Blueprint
+  - Actions / Events personnalisés
+  - Importers (FBX, USD, etc.)
+- Manifest plugin.json
+
+2. SCRIPTING CONTRÔLÉ (OPTIONNEL)
+- Langage : TypeScript sandboxé
+- Accès limité :
+  - ECS
+  - Events
+  - API moteur
+- Aucun accès FS / réseau direct
+- Scripts attachés à des entités
+
+3. UI & UX AVANCÉE
+- Layout dockable (Viewport, Blueprint, Inspector)
+- Thèmes
+- Raccourcis clavier configurables
+- Mode Présentation / Mode Jeu
+
+4. SYSTÈME D’ANIMATION
+- Timeline simple
+- Animation Transform
+- Triggers liés à la timeline
+- Compatible Blueprint
+
+5. AUDIO ENGINE
+- Audio spatial
+- Events audio (onEnter, onExit, onAction)
+- Mixage simple
+- Assets audio gérés comme les assets 3D
+
+6. UI IN-GAME
+- UI 2D (HUD)
+- Boutons, textes, images
+- Événements UI → Blueprint
+- Responsive
+
+7. PROFILS DE BUILD
+- Web (statique)
+- Electron
+- WebView mobile
+- Debug / Production
+
+8. OUTILS DE DEBUG
+- Blueprint step-by-step
+- Visualisation des collisions Rapier
+- Profiler simple
+- Logs runtime intégrés
+
+EXTENSION DES FORMATS :
+
+scene.json
+- support des scripts
+- références plugins
+- animation timelines
+
+blueprint.json
+- graph versionné
+- nodes plugins
+
+plugin.json
+{
+  "name": "example-plugin",
+  "version": "1.0.0",
+  "engine": "^3.0.0",
+  "nodes": [],
+  "components": [],
+  "permissions": []
+}
+
+ARCHITECTURE V3 :
+
+apps/
+ ├─ electron/
+ ├─ editor/
+ ├─ engine/
+ ├─ runtime/
+ ├─ plugins/
+ └─ shared/
+
+CONTRAINTES ABSOLUES :
+- Compatibilité V1 / V2 obligatoire
+- Pas de marketplace publique (encore)
+- Pas de multiplayer
+- Pas de cloud obligatoire
+- Pas de dépendance serveur
+
+CE QUE TU DOIS PRODUIRE :
+1. Architecture complète V3
+2. Système de plugins détaillé
+3. API moteur publique
+4. Modèle de scripting sécurisé
+5. Pipeline build multi-cibles
+6. Stratégie de migration V2 → V3
+7. Exemples de plugins concrets
+
+PROCÉDURE :
+1. Concevoir le système de plugins
+2. Étendre ECS sans casser l’existant
+3. Ajouter scripting contrôlé
+4. Étendre Blueprint
+5. Ajouter animation, audio, UI
+6. Tester sur projets V1/V2
+7. Préparer terrain V4 (marketplace)
+
+Ne supprimer aucune fonctionnalité existante.
+Ne pas sur-optimiser.
+Toujours privilégier la lisibilité et l’extensibilité.

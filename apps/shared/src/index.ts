@@ -14,10 +14,11 @@ export type PhysicsComponent = {
   type: "dynamic" | "static";
   collider: "box" | "sphere";
   mass?: number;
+  isTrigger?: boolean;
 };
 
 export type LogicComponent = {
-  graphId: string;
+  graph: string;
 };
 
 export type BlueprintEventType =

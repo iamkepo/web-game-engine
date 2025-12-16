@@ -28,6 +28,9 @@
           "type": "dynamic",
           "collider": "box",
           "mass": 1
+        },
+        "logic": {
+          "graph": "blueprint-1"
         }
       }
     }
